@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.2...3.5)
+
+project(imgui)
+add_library(imgui)
+
+file(GLOB MY_SOURCES CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+file(GLOB BACKENDS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_glfw.* ${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_opengl3.*)
+file(GLOB VS_DEBUG CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/misc/debugger/imgui.natvis ${CMAKE_CURRENT_SOURCE_DIR}/misc/debugger/imgui.natstepfilter)
+file(GLOB STD_STRING CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/misc/cpp/imgui_stdlib.*)
+
+target_include_directories("${PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+
+target_sources("${PROJECT_NAME}" PRIVATE ${MY_SOURCES} ${BACKENDS} ${VS_DEBUG} ${STD_STRING})
+
+target_link_libraries(imgui PUBLIC glfw glad)
